@@ -61,8 +61,7 @@ import {ref} from 'vue'
 import { LockClosedIcon } from '@heroicons/vue/20/solid'
 import GuestLayout from "../components/GuestLayout.vue";
 import {useRouter} from 'vue-router'
-import store from "../store";
-
+import store from "../store/index.js";
 const router = useRouter()
 
 let loading = ref(false);

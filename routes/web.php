@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
+Route::get('/product/{product:slug}', [\App\Http\Controllers\ProductController::class, 'view'])->name('product.view');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,5 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

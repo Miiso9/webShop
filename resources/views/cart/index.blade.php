@@ -1,3 +1,3 @@
 <x-app-layout>
-    Welcome
+    <h1>Cart</h1>
 </x-app-layout>

@@ -9,13 +9,13 @@
                     <div>
                         <label for="email-address" class="sr-only">Email address</label>
                         <input id="email-address" name="email" type="email" autocomplete="email" required="" v-model="user.email"
-                               class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                                placeholder="Email adresa" />
                     </div>
                     <div>
                         <label for="password" class="sr-only">Password</label>
                         <input id="password" name="password" type="password" autocomplete="current-password" required="" v-model="user.password"
-                               class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                                placeholder="Lozinka" />
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="text-sm">
-                        <router-link :to="{name: 'requestPassword'}" class="font-medium text-indigo-600 hover:text-indigo-500">Zaboravio si šifru?</router-link>
+                        <router-link :to="{name: 'requestPassword'}" class="font-medium text-indigo-600 hover:text-indigo-500">Zaboravio si lozinku?</router-link>
                     </div>
                 </div>
 

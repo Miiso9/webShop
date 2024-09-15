@@ -60,6 +60,20 @@ class Cart
         );
     }
 
+    public static function getCountAndTotalFromItems($cartItems)
+    {
+        return array_reduce(
+            $cartItems,
+            function ($carry, $item) {
+                return [
+                    'count' => $carry['count'] + $item['quantity'],
+                    'total' => $carry['total'] + ( $item['quantity'] * $item['price'] )
+                ];
+            },
+            ['count' => 0, 'total' => 0]
+        );
+    }
+
     public static function moveCartItemsIntoDb()
     {
         $request = \request();
@@ -68,17 +82,16 @@ class Cart
         $newCartItems = [];
         foreach ($cartItems as $cartItem) {
             if (isset($dbCartItems[$cartItem['product_id']])) {
-
                 continue;
             }
+            $newCartItems[] = [
+                'user_id' => $request->user()->id,
+                'product_id' => $cartItem['product_id'],
+                'quantity' => $cartItem['quantity'],
+            ];
         }
-        $newCartItems[] = [
-            'user_id' => $request->user()->id,
-            'product_id' => $cartItem['product_id'],
-            'quantity' => $cartItem['quantity'],
-        ];
 
-        if(!empty($newCartItems)) {
+        if (!empty($newCartItems)) {
             CartItem::insert($newCartItems);
         }
     }

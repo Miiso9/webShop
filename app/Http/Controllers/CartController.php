@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Cart;
-use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 
@@ -26,33 +26,35 @@ class CartController extends Controller
         return view('cart.index', compact('cartItems', 'products', 'total'));
     }
 
-    public function getTotalCount()
-    {
-        return response(['count' => Cart::getCartItemsCount()]);
-    }
-
     public function add(Request $request, Product $product)
     {
+        $quantity = $request->post('quantity', 1);
         $user = $request->user();
         if ($user) {
-            $data = [
-                'user_id' => $request->user()->id,
-                'product_id' => $product->id,
-                'quantity' => 1,
-                'price' => $product->price
-            ];
-            CartItem::create($data);
+
+            $cartItem = CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+
+            if ($cartItem) {
+                $cartItem->quantity += $quantity;
+                $cartItem->update();
+            } else {
+                $data = [
+                    'user_id' => $request->user()->id,
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                ];
+                CartItem::create($data);
+            }
 
             return response([
-                'count' => Cart::getCartItemsCount(),
-                'total' => CartItem::where(['user_id' => $request->user()->id])->sum('price * quantity')
+                'count' => Cart::getCartItemsCount()
             ]);
         } else {
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
             $productFound = false;
             foreach ($cartItems as &$item) {
                 if ($item['product_id'] === $product->id) {
-                    $item['quantity'] += 1;
+                    $item['quantity'] += $quantity;
                     $productFound = true;
                     break;
                 }
@@ -61,7 +63,7 @@ class CartController extends Controller
                 $cartItems[] = [
                     'user_id' => null,
                     'product_id' => $product->id,
-                    'quantity' => 1,
+                    'quantity' => $quantity,
                     'price' => $product->price
                 ];
             }
@@ -75,14 +77,13 @@ class CartController extends Controller
     {
         $user = $request->user();
         if ($user) {
-            $cartItem = CartItem::query()->where(['user_id', $user->id, 'product_id' => $product->id])->first();
+            $cartItem = CartItem::query()->where(['user_id' => $user->id, 'product_id' => $product->id])->first();
             if ($cartItem) {
                 $cartItem->delete();
             }
 
             return response([
                 'count' => Cart::getCartItemsCount(),
-                'total' => CartItem::where(['user_id' => $request->user()->id])->sum('price * quantity')
             ]);
         } else {
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
@@ -94,7 +95,7 @@ class CartController extends Controller
             }
             Cookie::queue('cart_items', json_encode($cartItems), 60 * 24 * 30);
 
-            return response(Cart::getCountAndTotalFromItems($cartItems));
+            return response(['count' => Cart::getCountFromItems($cartItems)]);
         }
     }
 
@@ -107,7 +108,6 @@ class CartController extends Controller
 
             return response([
                 'count' => Cart::getCartItemsCount(),
-                'total' => CartItem::where(['user_id' => $request->user()->id])->sum('price * quantity')
             ]);
         } else {
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
@@ -119,7 +119,7 @@ class CartController extends Controller
             }
             Cookie::queue('cart_items', json_encode($cartItems), 60 * 24 * 30);
 
-            return response(Cart::getCountAndTotalFromItems($cartItems));
+            return response(['count' => Cart::getCountFromItems($cartItems)]);
         }
     }
 }

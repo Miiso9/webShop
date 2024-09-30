@@ -76,9 +76,12 @@
                             Dostava i porezi obračunavaju se prilikom naplate.
                         </p>
 
-                        <button type="submit" class="btn-primary w-full py-3 text-lg">
-                            Prijeđite na naplatu
-                        </button>
+                        <form action="{{route('cart.checkout')}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn-primary w-full py-3 text-lg">
+                                Nastavi sa plaćanjem
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <!--/ Product Items -->

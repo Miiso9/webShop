@@ -153,6 +153,9 @@ class CheckoutController extends Controller
             'mode' => 'payment',
             'success_url' => route('checkout.success', [], true) . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.failure', [], true),
+
+            'customer_creation' => 'always',
+
         ]);
 
         $order->payment->session_id = $session->id;
@@ -166,7 +169,7 @@ class CheckoutController extends Controller
     {
         \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
-        $endpoint_secret = 'whsec_9e29e6c3bcd5422dedd5cab8df9e924e14d5f36dc285c284e8f23d6beaf11c2c';
+        $endpoint_secret = 'whsec_bfe45b4ee01394de1a8dcb1cc0b7052e7645e2cf95f02dc9c58d4235e0917745';
 
         $payload = @file_get_contents('php://input');
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];

@@ -30,7 +30,6 @@ export function setProducts(state, [loading, data = null]) {
 }
 
 export function setUsers(state, [loading, data = null]) {
-
     if (data) {
         state.users = {
             ...state.users,

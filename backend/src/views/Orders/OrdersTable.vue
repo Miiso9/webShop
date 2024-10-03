@@ -2,7 +2,7 @@
     <div class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
         <div class="flex justify-between border-b-2 pb-3">
             <div class="flex items-center">
-                <span class="whitespace-nowrap mr-3">Per Page</span>
+                <span class="whitespace-nowrap mr-3">Po Stranici</span>
                 <select @change="getOrders(null)" v-model="perPage"
                         class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                     <option value="5">5</option>
@@ -11,12 +11,12 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
-                <span class="ml-3">Found {{ orders.total }} orders</span>
+                <span class="ml-3">Pronađeno {{ orders.total }} narudžbi</span>
             </div>
             <div>
                 <input v-model="search" @change="getOrders(null)"
                        class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                       placeholder="Type to Search orders">
+                       placeholder="Upiši za pretraživanje">
             </div>
         </div>
 
@@ -27,22 +27,22 @@
                     ID
                 </TableHeaderCell>
                 <TableHeaderCell :sort-field="sortField" :sort-direction="sortDirection">
-                    Customer
+                    Kupac
                 </TableHeaderCell>
                 <TableHeaderCell field="status" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortOrders('status')">
-                    Status
+                    Stanje
                 </TableHeaderCell>
                 <TableHeaderCell field="total_price" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortOrders('total_price')">
-                    Price
+                    Cijena
                 </TableHeaderCell>
                 <TableHeaderCell field="created_at" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortOrders('created_at')">
-                    Date
+                    Datum
                 </TableHeaderCell>
                 <TableHeaderCell field="actions">
-                    Actions
+                    Akcije
                 </TableHeaderCell>
             </tr>
             </thead>
@@ -51,7 +51,7 @@
                 <td colspan="6">
                     <Spinner v-if="orders.loading"/>
                     <p v-else class="text-center py-8 text-gray-700">
-                        There are no orders
+                        Nema narudžbi
                     </p>
                 </td>
             </tr>
@@ -89,7 +89,7 @@
 
         <div v-if="!orders.loading" class="flex justify-between items-center mt-5">
             <div v-if="orders.data.length">
-                Showing from {{ orders.from }} to {{ orders.to }}
+                Pokaziva se od {{ orders.from }} do {{ orders.to }}
             </div>
             <nav
                 v-if="orders.total > orders.limit"

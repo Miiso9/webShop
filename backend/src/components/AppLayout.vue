@@ -40,8 +40,8 @@ function toggleSidebar(){
     }
 
     onMounted(()=> {
-        store.dispatch('getUser')
-       handleSidebarOpened();
+        store.dispatch('getCurrentUser')
+        handleSidebarOpened();
         window.addEventListener('resize', handleSidebarOpened)
     })
 

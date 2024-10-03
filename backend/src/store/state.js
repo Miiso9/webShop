@@ -1,7 +1,7 @@
-const state = {
+export default {
     user: {
         token: sessionStorage.getItem('TOKEN'),
-            data: {}
+        data: {}
     },
     products: {
         loading: false,
@@ -10,10 +10,32 @@ const state = {
         from: null,
         to: null,
         page: 1,
-        limit: 10
-
+        limit: null,
+        total: null
+    },
+    users: {
+        loading: false,
+        data: [],
+        links: [],
+        from: null,
+        to: null,
+        page: 1,
+        limit: null,
+        total: null
+    },
+    orders: {
+        loading: false,
+        data: [],
+        links: [],
+        from: null,
+        to: null,
+        page: 1,
+        limit: null,
+        total: null
+    },
+    toast: {
+        show: false,
+        message: '',
+        delay: 5000
     }
 }
-
-export default state;
-

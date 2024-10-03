@@ -1,22 +1,27 @@
 <?php
+
 namespace App\Http\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+
 class OrderResource extends JsonResource
 {
     public static $wrap = false;
+
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
-        $customer = $this->user->customer;
-        $shipping = $customer->shippingAddress;
-        $billing = $customer->billingAddress;
+        $customer = $this->user ? $this->user->customer : null;
+        $shipping = $customer ? $customer->shippingAddress : null;
+        $billing = $customer ? $customer->billingAddress : null;
+
         return [
             'id' => $this->id,
             'status' => $this->status,
@@ -25,20 +30,20 @@ class OrderResource extends JsonResource
                 'id' => $item->id,
                 'unit_price' => $item->unit_price,
                 'quantity' => $item->quantity,
-                'product' => [
+                'product' => $item->product ? [
                     'id' => $item->product->id,
                     'slug' => $item->product->slug,
                     'title' => $item->product->title,
                     'image' => $item->product->image,
-                ]
+                ] : null
             ]),
-            'customer' => [
+            'customer' => $customer ? [
                 'id' => $this->user->id,
                 'email' => $this->user->email,
                 'first_name' => $customer->first_name,
                 'last_name' => $customer->last_name,
                 'phone' => $customer->phone,
-                'shippingAddress' => [
+                'shippingAddress' => $shipping ? [
                     'id' => $shipping->id,
                     'address1' => $shipping->address1,
                     'address2' => $shipping->address2,
@@ -46,8 +51,8 @@ class OrderResource extends JsonResource
                     'state' => $shipping->state,
                     'zipcode' => $shipping->zipcode,
                     'country' => $shipping->country->name,
-                ],
-                'billingAddress' => [
+                ] : null,
+                'billingAddress' => $billing ? [
                     'id' => $billing->id,
                     'address1' => $billing->address1,
                     'address2' => $billing->address2,
@@ -55,8 +60,8 @@ class OrderResource extends JsonResource
                     'state' => $billing->state,
                     'zipcode' => $billing->zipcode,
                     'country' => $billing->country->name,
-                ]
-            ],
+                ] : null
+            ] : null,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),
         ];

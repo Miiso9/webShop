@@ -27,6 +27,16 @@
                 Korisnici
             </span>
         </router-link>
+        <router-link :to="{name: 'app.customers'}"
+                     class="flex items-center py-1 px-2 rounded transition-colors hover:bg-black/30 mb-2">
+            <span class="mr-4 text-gray-300">
+                <UserGroupIcon class="w-5" />
+            </span>
+            <span class="text-sm ">
+                Kupci
+            </span>
+        </router-link>
+
         <router-link :to="{name: 'app.dashboard'}"
                      class="flex items-center py-1 px-2 rounded transition-colors hover:bg-black/30 mb-2">
             <span class="mr-4 text-gray-300">
@@ -52,7 +62,7 @@
 
 <script setup>
 
-import {HomeIcon, UsersIcon, ShoppingCartIcon,ChartBarIcon, ShoppingBagIcon} from '@heroicons/vue/24/outline'
+import {HomeIcon, UsersIcon, UserGroupIcon, ShoppingCartIcon,ChartBarIcon, ShoppingBagIcon} from '@heroicons/vue/24/outline'
 </script>
 
 <style scoped>

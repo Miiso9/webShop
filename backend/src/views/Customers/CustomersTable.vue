@@ -2,7 +2,7 @@
     <div class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
         <div class="flex justify-between border-b-2 pb-3">
             <div class="flex items-center">
-                <span class="whitespace-nowrap mr-3">Per Page</span>
+                <span class="whitespace-nowrap mr-3">Po Stranici</span>
                 <select @change="getCustomers(null)" v-model="perPage"
                         class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                     <option value="5">5</option>
@@ -11,7 +11,7 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
-                <span class="ml-3">Found {{customers.total}} customers</span>
+                <span class="ml-3">Pronađeno {{customers.total}} kupaca </span>
             </div>
             <div>
                 <input v-model="search" @change="getCustomers(null)"
@@ -19,6 +19,7 @@
                        placeholder="Type to Search customers">
             </div>
         </div>
+
         <table class="table-auto w-full">
             <thead>
             <tr>
@@ -28,26 +29,26 @@
                 </TableHeaderCell>
                 <TableHeaderCell field="name" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortCustomers('name')">
-                    Name
+                    Ime
                 </TableHeaderCell>
                 <TableHeaderCell field="email" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortCustomers('email')">
-                    Email
+                    Prezime
                 </TableHeaderCell>
                 <TableHeaderCell field="phone" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortCustomers('phone')">
-                    Phone
+                    Broj
                 </TableHeaderCell>
                 <TableHeaderCell field="status" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortCustomers('status')">
-                    Status
+                    Stanje
                 </TableHeaderCell>
                 <TableHeaderCell field="created_at" :sort-field="sortField" :sort-direction="sortDirection"
                                  @click="sortCustomers('created_at')">
-                    Register Date
+                    Datum registracije
                 </TableHeaderCell>
                 <TableHeaderCell field="actions">
-                    Actions
+                    Akcije
                 </TableHeaderCell>
             </tr>
             </thead>
@@ -56,7 +57,7 @@
                 <td colspan="7">
                     <Spinner v-if="customers.loading"/>
                     <p v-else class="text-center py-8 text-gray-700">
-                        There are no customers
+                        Nema kupaca
                     </p>
                 </td>
             </tr>
@@ -90,6 +91,7 @@
                                     aria-hidden="true"/>
                             </MenuButton>
                         </div>
+
                         <transition
                             enter-active-class="transition duration-100 ease-out"
                             enter-from-class="transform scale-95 opacity-0"
@@ -103,20 +105,20 @@
                             >
                                 <div class="px-1 py-1">
                                     <MenuItem v-slot="{ active }">
-                                        <button
+                                        <router-link
+                                            :to="{name: 'app.customers.view', params: {id: customer.id}}"
                                             :class="[
                         active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                       ]"
-                                            @click="editCustomer(customer)"
                                         >
                                             <PencilIcon
                                                 :active="active"
                                                 class="mr-2 h-5 w-5 text-indigo-400"
                                                 aria-hidden="true"
                                             />
-                                            Edit
-                                        </button>
+                                            Uredi
+                                        </router-link>
                                     </MenuItem>
                                     <MenuItem v-slot="{ active }">
                                         <button
@@ -131,7 +133,7 @@
                                                 class="mr-2 h-5 w-5 text-indigo-400"
                                                 aria-hidden="true"
                                             />
-                                            Delete
+                                            Izbriši
                                         </button>
                                     </MenuItem>
                                 </div>
@@ -142,9 +144,10 @@
             </tr>
             </tbody>
         </table>
+
         <div v-if="!customers.loading" class="flex justify-between items-center mt-5">
             <div v-if="customers.data.length">
-                Showing from {{ customers.from }} to {{ customers.to }}
+                Pokaziva se od {{ customers.from }} do {{ customers.to }}
             </div>
             <nav
                 v-if="customers.total > customers.limit"
@@ -175,6 +178,7 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import {computed, onMounted, ref} from "vue";
 import store from "../../store";
@@ -183,25 +187,31 @@ import {CUSTOMERS_PER_PAGE} from "../../constants";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
-import CustomerModal from "./CustomerModal.vue";
+
 const perPage = ref(CUSTOMERS_PER_PAGE);
 const search = ref('');
 const customers = computed(() => store.state.customers);
 const sortField = ref('updated_at');
 const sortDirection = ref('desc')
+
 const customer = ref({})
 const showCustomerModal = ref(false);
+
 const emit = defineEmits(['clickEdit'])
+
 onMounted(() => {
     getCustomers();
 })
+
 function getForPage(ev, link) {
     ev.preventDefault();
     if (!link.url || link.active) {
         return;
     }
+
     getCustomers(link.url)
 }
+
 function getCustomers(url = null) {
     store.dispatch("getCustomers", {
         url,
@@ -211,6 +221,7 @@ function getCustomers(url = null) {
         sort_direction: sortDirection.value
     });
 }
+
 function sortCustomers(field) {
     if (field === sortField.value) {
         if (sortDirection.value === 'desc') {
@@ -222,11 +233,14 @@ function sortCustomers(field) {
         sortField.value = field;
         sortDirection.value = 'asc'
     }
+
     getCustomers()
 }
+
 function showAddNewModal() {
     showCustomerModal.value = true
 }
+
 function deleteCustomer(customer) {
     if (!confirm(`Are you sure you want to delete the customer?`)) {
         return
@@ -237,9 +251,9 @@ function deleteCustomer(customer) {
             store.dispatch('getCustomers')
         })
 }
-function editCustomer(p) {
-    emit('clickEdit', p)
-}
+
 </script>
+
 <style scoped>
+
 </style>

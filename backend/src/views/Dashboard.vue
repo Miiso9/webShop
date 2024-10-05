@@ -160,9 +160,9 @@ function updateDashboard() {
         loading.value.paidOrders = false;
     });
     axiosClient.get(`/dashboard/income-amount`, { params: { d } }).then(({ data }) => {
-        totalIncome.value = new Intl.NumberFormat('en-US', {
+        totalIncome.value = new Intl.NumberFormat('bs-BA', {
             style: 'currency',
-            currency: 'USD',
+                currency: 'BAM',
             minimumFractionDigits: 0
         }).format(data);
         loading.value.totalIncome = false;

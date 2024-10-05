@@ -6,15 +6,11 @@
             <table>
                 <tbody>
                 <tr>
-                    <td class="font-bold py-1 px-2">Order #</td>
-                    <td>{{$order->id}}</td>
-                </tr>
-                <tr>
-                    <td class="font-bold py-1 px-2">Order Date</td>
+                    <td class="font-bold py-1 px-2">Datum Narudžbe</td>
                     <td>{{$order->created_at}}</td>
                 </tr>
                 <tr>
-                    <td class="font-bold py-1 px-2">Order Status</td>
+                    <td class="font-bold py-1 px-2">Stanje Narudžbe</td>
                     <td>
                         <span
                             class="text-white py-1 px-2 rounded {{$order->isPaid() ? 'bg-emerald-500' : 'bg-gray-400'}}">
@@ -23,7 +19,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="font-bold py-1 px-2">SubTotal</td>
+                    <td class="font-bold py-1 px-2">Ukupna Cijena</td>
                     <td>${{ $order->total_price }}</td>
                 </tr>
                 </tbody>
@@ -45,8 +41,8 @@
                             </h3>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center">Qty: {{$item->quantity}}</div>
-                            <span class="text-lg font-semibold"> ${{$item->unit_price}} </span>
+                            <div class="flex items-center">Kol: {{$item->quantity}} | </div>
+                            <span class="text-lg font-semibold">${{$item->unit_price}} </span>
                         </div>
                     </div>
                 </div>

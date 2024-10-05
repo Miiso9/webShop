@@ -37,7 +37,7 @@
             </span>
         </router-link>
 
-        <router-link :to="{name: 'app.dashboard'}"
+        <router-link :to="{name: 'reports.orders'}"
                      class="flex items-center py-1 px-2 rounded transition-colors hover:bg-black/30 mb-2">
             <span class="mr-4 text-gray-300">
                 <ChartBarIcon class="w-5" />

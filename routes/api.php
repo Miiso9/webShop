@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
@@ -40,6 +41,9 @@ Route::middleware(['auth:sanctum', 'admin'])
         Route::get('/dashboard/orders-by-country', [DashboardController::class, 'ordersByCountry']);
         Route::get('/dashboard/latest-customers', [DashboardController::class, 'latestCustomers']);
         Route::get('/dashboard/latest-orders', [DashboardController::class, 'latestOrders']);
+
+        Route::get('/report/orders', [ReportController::class, 'orders']);
+        Route::get('/report/customers', [ReportController::class, 'customers']);
     });
 
 

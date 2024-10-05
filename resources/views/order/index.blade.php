@@ -9,12 +9,12 @@
             <table class="table-auto w-full">
                 <thead>
                 <tr class="border-b-2">
-                    <th class="text-left p-2">Order #</th>
-                    <th class="text-left p-2">Date</th>
-                    <th class="text-left p-2">Status</th>
-                    <th class="text-left p-2">SubTotal</th>
-                    <th class="text-left p-2">Items</th>
-                    <th class="text-left p-2">Actions</th>
+                    <th class="text-left p-2">Narudžba #</th>
+                    <th class="text-left p-2">Datum</th>
+                    <th class="text-left p-2">Stanje</th>
+                    <th class="text-left p-2">Ukupna Cijena</th>
+                    <th class="text-left p-2">Stavke</th>
+                    <th class="text-left p-2">Akcije</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                         <td class="py-1 px-2">${{$order->total_price}}</td>
                         <td class="py-1 px-2 whitespace-nowrap">{{$order->items()->count()}} item(s)</td>
                         <td class="py-1 px-2 flex gap-2 w-[100px]">
-                            @if (!$order->isPaid())
+                            @if ($order->unPaid())
                                 <form action="{{ route('cart.checkout-order', $order) }}"
                                       method="POST">
                                     @csrf

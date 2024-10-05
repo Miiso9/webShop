@@ -128,7 +128,6 @@ function onSubmit() {
             .then(response => {
                 loading.value = false;
                 if (response.status === 200) {
-                    // TODO show notification
                     store.dispatch('getProducts')
                     closeModal()
                 }
@@ -138,14 +137,12 @@ function onSubmit() {
             .then(response => {
                 loading.value = false;
                 if (response.status === 201) {
-                    // TODO show notification
                     store.dispatch('getProducts')
                     closeModal()
                 }
             })
             .catch(err => {
                 loading.value = false;
-                debugger;
             })
     }
 }

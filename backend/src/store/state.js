@@ -1,3 +1,5 @@
+import {ref} from "vue";
+
 export default {
     user: {
         token: sessionStorage.getItem('TOKEN'),
@@ -48,5 +50,14 @@ export default {
         show: false,
         message: '',
         delay: 5000
-    }
+    },
+    dateOptions: [
+        { key: '1d', text: 'Zadnji Dan' },
+        { key: '1k', text: 'Zadnji Tjedan' },
+        { key: '2k', text: 'Zadnja 2 Tjedna' },
+        { key: '1m', text: 'Zadnji Mjesec' },
+        { key: '3m', text: 'Zadnja 3 Mjeseca' },
+        { key: '6m', text: 'Zadnjih 6 Mjeseci' },
+        { key: 'all', text: 'Cijelo Vrijeme' },
+    ]
 }

@@ -87,3 +87,11 @@ MAIL_PASSWORD=your_mailtrap_password
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS=your_email@example.com
 MAIL_FROM_NAME="${APP_NAME}"
+``` 
+
+## Admin Access
+
+Admin user only for admin panel access: 
+- URL: http://localhost:5174
+- Email: admin@example.com
+- Password admin123

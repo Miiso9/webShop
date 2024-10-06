@@ -12,7 +12,7 @@ class ProductController extends Controller
         $products = Product::query()
             ->where('published', '=', 1)
             ->orderBy('updated_at', 'desc')
-            ->paginate(8);
+            ->paginate(9);
         return view('product.index', [
             'products' => $products
         ]);

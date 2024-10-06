@@ -24,6 +24,17 @@ class CheckoutController extends Controller
 
         \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
+        $customerModel = \App\Models\Customer::find($user->id);
+        $shippingAddress = $customerModel->shippingAddress;
+        $billingAddress = $customerModel->billingAddress;
+
+        if (is_null($shippingAddress) || (is_null($shippingAddress->address1) && is_null($shippingAddress->address2))) {
+            return view('checkout.failure', ['message' => ' Adresa dostave je prazna. Ažurirajte']);
+        }
+        if (is_null($billingAddress) || (is_null($billingAddress->address1) && is_null($billingAddress->address2))) {
+            return view('checkout.failure', ['message' => ' Adresa naplate je prazna. Ažurirajte']);
+        }
+
         [$products, $cartItems] = Cart::getProductsAndCartItems();
 
         $orderItems = [];
@@ -88,6 +99,7 @@ class CheckoutController extends Controller
             'updated_by' => $user->id,
             'session_id' => $session->id
         ];
+
         Payment::create($paymentData);
 
         CartItem::where(['user_id' => $user->id])->delete();
@@ -117,6 +129,18 @@ class CheckoutController extends Controller
             }
             if ($payment->status === PaymentStatus::Pending->value) {
                 $this->updateOrderAndSession($payment);
+            }
+            $customer = \Stripe\Customer::retrieve($session->customer);
+
+            $customerModel = \App\Models\Customer::find($user->id);
+            $shippingAddress = $customerModel->shippingAddress;
+            $billingAddress = $customerModel->billingAddress;
+
+            if (is_null($shippingAddress->address1) && is_null($shippingAddress->address2)) {
+                throw new \Exception('Shipping address is incomplete');
+            }
+            if (is_null($billingAddress->address1) && is_null($billingAddress->address2)) {
+                throw new \Exception('Billing address is incomplete');
             }
             $customer = \Stripe\Customer::retrieve($session->customer);
             return view('checkout.success', compact('customer'));

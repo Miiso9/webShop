@@ -55,9 +55,9 @@
                 <div v-for="o of latestOrders" :key="o.id" class="py-2 px-3 hover:bg-gray-50">
                     <p>
                         <router-link :to="{name: 'app.orders.view', params: {id: o.id}}" class="text-indigo-700 font-semibold">
-                            Order #{{ o.id }}
+                            Narudžba #{{ o.id }}
                         </router-link>
-                        created {{ o.created_at }}. {{ o.items }} items
+                        napravljena {{ o.created_at }}. Broj stavki: {{ o.items }}
                     </p>
                     <p class="flex justify-between">
                         <span>{{ o.first_name }} {{ o.last_name }}</span>

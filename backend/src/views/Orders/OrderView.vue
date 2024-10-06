@@ -62,9 +62,9 @@
                 <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Adresa naplate</h2>
                 <!--  Billing Address Details-->
                 <div>
-                    {{ order.customer.billingAddress.address1 }}, {{ order.customer.billingAddress.address2 }} <br>
-                    {{ order.customer.billingAddress.city }}, {{ order.customer.billingAddress.zipcode }} <br>
-                    {{ order.customer.billingAddress.state }}, {{ order.customer.billingAddress.country }} <br>
+                    {{ order.customer.billingAddress?.address1 || 'Nije unešena adresa' }}, {{ order.customer.billingAddress?.address2 || '' }} <br>
+                    {{ order.customer.billingAddress?.city || 'Nije unešena adresa' }}, {{ order.customer.billingAddress?.zipcode || 'Nije unešena adresa' }} <br>
+                    {{ order.customer.billingAddress?.state || 'Nije unešena adresa' }}, {{ order.customer.billingAddress?.country || 'Nije unešena adresa' }} <br>
                 </div>
                 <!--/  Billing Address Details-->
             </div>
@@ -72,9 +72,9 @@
                 <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Adresa dostave</h2>
                 <!--  Shipping Address Details-->
                 <div>
-                    {{ order.customer.shippingAddress.address1 }}, {{ order.customer.shippingAddress.address2 }} <br>
-                    {{ order.customer.shippingAddress.city }}, {{ order.customer.shippingAddress.zipcode }} <br>
-                    {{ order.customer.shippingAddress.state }}, {{ order.customer.shippingAddress.country }} <br>
+                    {{ order.customer.shippingAddress?.address1 || 'Nije unešena adresa' }}, {{ order.customer.shippingAddress?.address2 || '' }} <br>
+                    {{ order.customer.shippingAddress?.city || 'Nije unešena adresa' }}, {{ order.customer.shippingAddress?.zipcode || 'Nije unešena adresa' }} <br>
+                    {{ order.customer.shippingAddress?.state || 'Nije unešena adresa' }}, {{ order.customer.shippingAddress?.country || 'Nije unešena adresa' }} <br>
                 </div>
                 <!--/  Shipping Address Details-->
             </div>
@@ -98,7 +98,7 @@
                             </h3>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center">Qty: {{ item.quantity }}</div>
+                            <div class="flex items-center">Kol: {{ item.quantity }}</div>
                             <span class="text-lg font-semibold"> ${{ item.unit_price }} </span>
                         </div>
                     </div>

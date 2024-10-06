@@ -7,7 +7,7 @@
     class="flex justify-between bg-slate-100 shadow-md text-indigo-700"
 >
     <div>
-        <a href="{{ route('home') }}" class=" flex justify block py-navbar-item pl-5"> Logo </a>
+        <a href="{{ route('home') }}" class=" flex justify block py-navbar-item pl-5"> E-Commerce</a>
     </div>
     <!-- Responsive Menu -->
     <div
@@ -38,14 +38,12 @@
                         </svg>
                         Korpa
                     </div>
-                    <!-- Korpa Items Counter -->
                     <small
                         x-show="cartItemsCount"
                         x-transition
                         x-text="cartItemsCount"
                         class="py-[2px] px-[8px] rounded-full bg-red-500"
                     ></small>
-                    <!--/ Korpa Items Counter -->
                 </a>
             </li>
             @if(!Auth::guest())
@@ -254,6 +252,29 @@
                     ></small>
                 </a>
             </li>
+
+            <li>
+                <a
+                    href="{{ route('order.index') }}"
+                    class="relative inline-flex items-center py-navbar-item px-navbar-item hover:bg-indigo-400"
+                >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    />
+                </svg>
+                Moje narudžbe
+                </a>
+            </li>
             @if(!Auth::guest())
             <li x-data="{open: false}" class="relative">
                 <a
@@ -319,28 +340,7 @@
                             Moj profil
                         </a>
                     </li>
-                    <li>
-                        <a
-                            href={{ route('order.index') }}
-                            class="flex px-3 py-2 hover:bg-indigo-400"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                                />
-                            </svg>
-                            Moje narudžbe
-                        </a>
-                    </li>
+
                     <li>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
